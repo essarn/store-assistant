@@ -1,0 +1,17 @@
+# vscode
+.vscode
+
+# node
+node_modules/
+
+# turbo
+.turbo
+
+# build
+dist
+dist-ssr
+
+# misc
+.DS_Store
+*.local
+*.log
