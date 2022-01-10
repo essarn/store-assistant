@@ -1,7 +1,8 @@
 import {
+  AssortmentDocument,
   Campaign,
   CampaignProductsDocument,
-  CampaignsDocument,
+  Category,
   Product,
 } from '@/graphql/generated'
 import { acceptHMRUpdate, defineStore } from 'pinia'
@@ -10,12 +11,17 @@ import { createClient } from 'villus'
 const villus = createClient({ url: 'http://localhost:8080/graphql' })
 
 export type AssortmentState = {
-  campaigns: Campaign[]
+  categories: Omit<Category, 'campaigns'>[]
+  campaigns: (Campaign & { category: string })[]
   products: (Product & { campaign: string })[]
 }
 
 export const useAssortmentStore = defineStore('campaigns', {
-  state: (): AssortmentState => ({ campaigns: [], products: [] }),
+  state: (): AssortmentState => ({
+    categories: [],
+    campaigns: [],
+    products: [],
+  }),
   getters: {
     campaign: (state) => (code: string) =>
       state.campaigns.find((campaign) => campaign.code === code),
@@ -23,13 +29,27 @@ export const useAssortmentStore = defineStore('campaigns', {
       state.products.filter((product) => product.campaign === code),
   },
   actions: {
-    async fetchCampaigns() {
-      if (this.campaigns.length == 0) {
+    async fetchCategoriesAndCampaigns() {
+      if (this.categories.length === 0 && this.campaigns.length === 0) {
         const { data } = await villus.executeQuery({
-          query: CampaignsDocument,
+          query: AssortmentDocument,
         })
+
         if (data) {
-          this.campaigns = data.campaigns
+          this.categories = data.categories.map((category) => ({
+            code: category.code,
+            name: category.name,
+          }))
+          this.campaigns = data.categories.reduce(
+            (previous, current) => [
+              ...previous,
+              ...current.campaigns.map((campaign) => ({
+                ...campaign,
+                category: current.code,
+              })),
+            ],
+            <(Campaign & { category: string })[]>[]
+          )
         }
       }
     },

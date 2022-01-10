@@ -24,14 +24,22 @@
     <section class="rounded shadow p-4">
       <p>{{ campaign.manufacturer }} {{ campaign.volume }}</p>
       <p v-if="campaign.description">{{ campaign.description }}</p>
-      <Suspense>
-        <template #default>
-          <CampaignProducts :code="code" />
-        </template>
-        <template #fallback>
-          <p>Loading...</p>
-        </template>
-      </Suspense>
+
+      <div class="divide-y flex flex-col">
+        <article
+          v-for="product in products"
+          :key="product.code"
+          class="flex space-x-2 py-2 items-center justify-between"
+        >
+          <div>
+            <h2 class="truncate">{{ product.name }}</h2>
+            <p class="truncate">
+              {{ product.manufacturer }} {{ product.volume }}
+            </p>
+          </div>
+          <img :src="product.image" class="w-1/5" />
+        </article>
+      </div>
     </section>
   </div>
 
@@ -41,6 +49,7 @@
 <script lang="ts" setup>
   import { useAssortmentStore } from '@/stores/assortment'
   import { parseDate } from '@/utils'
+  import { computed } from 'vue'
 
   const props = defineProps({
     code: {
@@ -51,4 +60,7 @@
 
   const assortment = useAssortmentStore()
   const campaign = assortment.campaign(props.code)
+  const products = computed(() => assortment.campaignProducts(props.code))
+
+  await assortment.fetchCampaignProducts(props.code)
 </script>

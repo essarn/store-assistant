@@ -1,7 +1,62 @@
+// Left menu categorytree
+export interface LeftMenuCategorytree {
+  id: string
+  category: string
+  title: string
+  url: string
+  valid: boolean
+  children: Child4[]
+}
+
+export interface Child4 {
+  id: string
+  category: string
+  title: string
+  url: string
+  valid: boolean
+  children: (Child2 | Children2 | Child3 | Child)[]
+}
+
+export interface Children2 {
+  id: string
+  category: string
+  title: string
+  url: string
+  valid: boolean
+  children: (Child3 | Child)[]
+}
+
+export interface Child3 {
+  id: string
+  category: string
+  title: string
+  url: string
+  valid: boolean
+  children: Child[]
+}
+
+export interface Child2 {
+  id: string
+  category: string
+  title: string
+  url: string
+  valid: boolean
+  children: Child[]
+}
+
+export interface Child {
+  id: string
+  category: string
+  title: string
+  url: string
+  valid: boolean
+  children: unknown[]
+}
+
 // Search Campaigns
 
 export interface SearchCampaigns {
-  results: Result[]
+  results?: Result[]
   sorts?: unknown
   pagination: Pagination
   relatedResults?: unknown

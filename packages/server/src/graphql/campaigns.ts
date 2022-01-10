@@ -1,6 +1,4 @@
-import { SearchCampaigns } from '@/types'
-import { makeUrl, parseDate } from '@/utils'
-import fetch from 'node-fetch'
+import { fetchCampaigns } from '@/utils'
 import { Field, ID, ObjectType, Query, Resolver } from 'type-graphql'
 
 @ObjectType()
@@ -46,30 +44,6 @@ export class Campaign {
 export class CampaginResolver {
   @Query(() => [Campaign])
   async campaigns(): Promise<Campaign[]> {
-    const url = makeUrl('search/campaigns/offline', { q: '2189', size: '1000' })
-    const response = await fetch(url)
-    const json = await response.json()
-
-    const data = json as SearchCampaigns
-    const campaigns = data.results.map<Campaign>((campaign) => {
-      const promotion = campaign.potentialPromotions[0]
-
-      return {
-        code: promotion.code,
-        type: campaign.title,
-        start: parseDate(promotion.startDate),
-        end: parseDate(promotion.endDate),
-        name: campaign.name,
-        image: campaign.image.url,
-        description: promotion.description,
-        manufacturer: campaign.manufacturer,
-        volume: campaign.displayVolume,
-        price: promotion.cartLabel,
-        comparePrice: promotion.comparePrice,
-        savePrice: promotion.savePrice,
-      }
-    })
-
-    return campaigns
+    return fetchCampaigns()
   }
 }

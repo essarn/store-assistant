@@ -5,8 +5,6 @@
 declare module 'vue' {
   export interface GlobalComponents {
     Breadcrumbs: typeof import('./src/components/Breadcrumbs.vue')['default']
-    CampaignList: typeof import('./src/components/CampaignList.vue')['default']
-    CampaignProducts: typeof import('./src/components/CampaignProducts.vue')['default']
   }
 }
 

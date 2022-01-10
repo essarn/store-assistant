@@ -31,6 +31,13 @@ export type Campaign = {
   volume: Scalars['String'];
 };
 
+export type Category = {
+  __typename?: 'Category';
+  campaigns: Array<Campaign>;
+  code: Scalars['ID'];
+  name: Scalars['String'];
+};
+
 export type Product = {
   __typename?: 'Product';
   code: Scalars['ID'];
@@ -44,12 +51,18 @@ export type Query = {
   __typename?: 'Query';
   campaignProducts: Array<Product>;
   campaigns: Array<Campaign>;
+  categories: Array<Category>;
 };
 
 
 export type QueryCampaignProductsArgs = {
   code: Scalars['String'];
 };
+
+export type AssortmentQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AssortmentQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', code: string, name: string, campaigns: Array<{ __typename?: 'Campaign', code: string, type: string, start: any, end: any, name: string, image: string, description?: string | null | undefined, manufacturer: string, volume: string, price: string, comparePrice?: string | null | undefined, savePrice?: string | null | undefined }> }> };
 
 export type CampaignProductsQueryVariables = Exact<{
   code: Scalars['String'];
@@ -58,11 +71,6 @@ export type CampaignProductsQueryVariables = Exact<{
 
 export type CampaignProductsQuery = { __typename?: 'Query', campaignProducts: Array<{ __typename?: 'Product', code: string, name: string, image: string, manufacturer: string, volume: string }> };
 
-export type CampaignsQueryVariables = Exact<{ [key: string]: never; }>;
 
-
-export type CampaignsQuery = { __typename?: 'Query', campaigns: Array<{ __typename?: 'Campaign', code: string, type: string, start: any, end: any, name: string, image: string, description?: string | null | undefined, manufacturer: string, volume: string, price: string, comparePrice?: string | null | undefined, savePrice?: string | null | undefined }> };
-
-
+export const AssortmentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Assortment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"campaigns"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"start"}},{"kind":"Field","name":{"kind":"Name","value":"end"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"manufacturer"}},{"kind":"Field","name":{"kind":"Name","value":"volume"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"comparePrice"}},{"kind":"Field","name":{"kind":"Name","value":"savePrice"}}]}}]}}]}}]} as unknown as DocumentNode<AssortmentQuery, AssortmentQueryVariables>;
 export const CampaignProductsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CampaignProducts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"code"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"campaignProducts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"code"},"value":{"kind":"Variable","name":{"kind":"Name","value":"code"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"manufacturer"}},{"kind":"Field","name":{"kind":"Name","value":"volume"}}]}}]}}]} as unknown as DocumentNode<CampaignProductsQuery, CampaignProductsQueryVariables>;
-export const CampaignsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Campaigns"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"campaigns"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"start"}},{"kind":"Field","name":{"kind":"Name","value":"end"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"manufacturer"}},{"kind":"Field","name":{"kind":"Name","value":"volume"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"comparePrice"}},{"kind":"Field","name":{"kind":"Name","value":"savePrice"}}]}}]}}]} as unknown as DocumentNode<CampaignsQuery, CampaignsQueryVariables>;
