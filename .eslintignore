@@ -1,2 +1,4 @@
 node_modules
 dist
+packages/server/loader.js
+packages/client/src/graphql/generated.ts

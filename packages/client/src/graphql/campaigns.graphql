@@ -1,0 +1,16 @@
+query Campaigns {
+  campaigns {
+    code
+    type
+    start
+    end
+    name
+    image
+    description
+    manufacturer
+    volume
+    price
+    comparePrice
+    savePrice
+  }
+}

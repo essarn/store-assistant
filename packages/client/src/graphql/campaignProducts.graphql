@@ -1,0 +1,9 @@
+query CampaignProducts($code: String!) {
+  campaignProducts(code: $code) {
+    code
+    name
+    image
+    manufacturer
+    volume
+  }
+}

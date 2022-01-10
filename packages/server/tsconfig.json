@@ -1,5 +1,15 @@
 {
   "extends": "@tsconfig/node16/tsconfig.json",
-  "include": ["**/*.ts"],
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.d.ts"],
   "exclude": ["node_modules"]
 }

@@ -2,10 +2,12 @@
   "root": true,
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "vue/setup-compiler-macros": true
   },
-  "parser": "@typescript-eslint/parser",
+  "parser": "vue-eslint-parser",
   "parserOptions": {
+    "parser": "@typescript-eslint/parser",
     "project": ["packages/*/tsconfig.json"]
   },
   "plugins": ["@typescript-eslint"],
@@ -13,12 +15,15 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:vue/vue3-recommended",
+    "@vue/eslint-config-typescript/recommended",
     "prettier"
   ],
   "rules": {
     "@typescript-eslint/no-unused-vars": [
       "warn",
       { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }
-    ]
+    ],
+    "vue/multi-word-component-names": "off"
   }
 }

@@ -1,0 +1,11 @@
+schema: http://localhost:8080/graphql
+documents: src/graphql/**/*.graphql
+generates:
+  ./src/graphql/generated.ts:
+    # config:
+    #   scalars:
+    #     Timestamp: Date
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node

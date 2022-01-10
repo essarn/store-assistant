@@ -4,15 +4,30 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate": "graphql-codegen"
   },
   "dependencies": {
-    "vue": "^3.2.25"
+    "graphql": "15.8.0",
+    "pinia": "^2.0.9",
+    "villus": "^1.0.1",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.3.1",
+    "@graphql-codegen/typed-document-node": "2.2.0",
+    "@graphql-codegen/typescript": "^2.4.2",
+    "@graphql-codegen/typescript-operations": "^2.2.2",
+    "@graphql-typed-document-node/core": "3.1.0",
     "@vitejs/plugin-vue": "^2.0.0",
+    "path": "^0.12.7",
     "typescript": "^4.4.4",
+    "unplugin-vue-components": "^0.17.11",
     "vite": "^2.7.2",
-    "vue-tsc": "^0.29.8"
+    "vite-plugin-pages": "^0.19.9",
+    "vite-plugin-windicss": "^1.6.2",
+    "vue-tsc": "^0.29.8",
+    "windicss": "^3.4.2"
   }
 }
