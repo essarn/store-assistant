@@ -1,34 +1,36 @@
 <template>
-  <header class="rounded flex flex-col space-y-2 m-2 shadow p-4">
-    <Breadcrumbs :items="[{ name: 'Erbjudanden' }]" />
-    <select v-model="filter" class="border-none rounded">
-      <option disabled="true" :value="undefined" selected>Kategori</option>
-      <option
-        v-for="category in categories"
-        :key="category.code"
-        :value="category.code"
+  <main class="space-y-2 bg-nord6 p-2">
+    <header class="flex flex-col space-y-2 card">
+      <Breadcrumbs :items="[{ name: 'Erbjudanden' }]" />
+      <select v-model="filter" class="border-none rounded px-2">
+        <option disabled="true" :value="undefined" selected>Kategori</option>
+        <option
+          v-for="category in categories"
+          :key="category.code"
+          :value="category.code"
+        >
+          {{ category.name }}
+        </option>
+      </select>
+    </header>
+    <section class="card">
+      <router-link
+        v-for="campaign in campaigns"
+        :key="campaign.code"
+        :to="`/campaigns/${campaign.code}`"
       >
-        {{ category.name }}
-      </option>
-    </select>
-  </header>
-  <section class="divide-y rounded flex flex-col m-2 shadow py-2 px-4">
-    <router-link
-      v-for="campaign in campaigns"
-      :key="campaign.code"
-      :to="`/campaigns/${campaign.code}`"
-    >
-      <article class="flex py-2 items-center justify-between">
-        <div class="w-4/5">
-          <h2 class="truncate">{{ campaign.name }}</h2>
-          <p class="truncate">
-            {{ campaign.manufacturer }} {{ campaign.volume }}
-          </p>
-        </div>
-        <img :src="campaign.image" class="w-1/5" />
-      </article>
-    </router-link>
-  </section>
+        <article class="flex py-2 items-center justify-between">
+          <div class="w-4/5">
+            <h2 class="truncate">{{ campaign.name }}</h2>
+            <p class="truncate">
+              {{ campaign.manufacturer }} {{ campaign.volume }}
+            </p>
+          </div>
+          <img :src="campaign.image" class="w-1/5" />
+        </article>
+      </router-link>
+    </section>
+  </main>
 </template>
 
 <script lang="ts" setup>
