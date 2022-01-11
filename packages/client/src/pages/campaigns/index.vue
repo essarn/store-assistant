@@ -19,7 +19,7 @@
         :key="campaign.code"
         :to="`/campaigns/${campaign.code}`"
       >
-        <article class="flex py-2 items-center justify-between">
+        <article class="flex space-y-2 items-center justify-between">
           <div class="w-4/5">
             <h2 class="truncate">{{ campaign.name }}</h2>
             <p class="truncate">

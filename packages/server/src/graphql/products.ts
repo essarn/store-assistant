@@ -1,4 +1,4 @@
-import { CampaignProducts } from '@/types'
+import { CampaignProducts } from '@/types/remote'
 import { makeUrl } from '@/utils'
 import fetch from 'node-fetch'
 import { Arg, Field, ID, ObjectType, Query, Resolver } from 'type-graphql'

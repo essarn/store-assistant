@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 import { Campaign } from './graphql/campaigns'
 import { Category } from './graphql/categories'
-import { LeftMenuCategorytree, SearchCampaigns } from './types'
+import { LeftMenuCategorytree, SearchCampaigns } from './types/remote'
 
 export const makeUrl = (path: string, parameters?: Record<string, string>) => {
   const url = new URL(path, 'https://willys.se')

@@ -287,3 +287,84 @@ export interface Price {
   minQuantity?: unknown
   maxQuantity?: unknown
 }
+
+// Rest Stores
+export interface RestStores {
+  openingHours: string[]
+  specialOpeningHours: string[]
+  address: Address
+  geoPoint: GeoPoint
+  name: string
+  extraPickUpInformation: string
+  franchiseStore: boolean
+  storeId: string
+  freeDeliveryThresholdFormatted: string
+  b2bFreeDeliveryThresholdFormatted: string
+  b2bPickingCostForDelivery: string
+  pickingCostForCollect: string
+  pickingCostForDelivery: string
+  pickupInStoreCost: string
+  b2bPickupInStoreCost: string
+  deliveryCost: string
+  pickingCostForCollectPlusPickupCost: string
+  b2bPickingCostForCollectPlusPickupCost: string
+  pickingCostForDeliveryPlusDeliveryCost: string
+  b2bPickingCostForDeliveryPlusDeliveryCost: string
+  b2bDeliveryCost: string
+  customerServiceEmail: string
+  customerServicePhone: string
+  open: boolean
+  openingHoursMessageKey: string
+  openingStoreMessageValue: string
+  flyerURL: string
+  onlineStore: boolean
+  willysHemma: boolean
+  clickAndCollect: boolean
+  b2BClickAndCollect: boolean
+  activelySelected: boolean
+  freePickingCostThresholdForCollectFormatted: string
+  freePickingCostThresholdForDeliveryFormatted: string
+  freeB2BPickingCostThresholdForCollectFormatted: string
+  freeB2BPickingCostThresholdForDeliveryFormatted: string
+  external: boolean
+  storeChangeAllowed: boolean
+  externalPickupLocation: boolean
+}
+
+export interface GeoPoint {
+  latitude: number
+  longitude: number
+}
+
+export interface Address {
+  id?: string
+  title?: unknown
+  titleCode?: unknown
+  firstName?: unknown
+  lastName?: unknown
+  companyName?: unknown
+  line1?: string
+  line2?: unknown
+  town?: string
+  region?: unknown
+  postalCode?: string
+  phone?: string
+  email?: string
+  country?: Country
+  shippingAddress: boolean
+  billingAddress: boolean
+  defaultAddress: boolean
+  visibleInAddressBook: boolean
+  formattedAddress?: string
+  cellphone?: unknown
+  longitude?: number
+  latitude?: number
+  appartment?: unknown
+  doorCode?: unknown
+  customerComment?: unknown
+}
+
+export interface Country {
+  isocode: string
+  name: string
+}

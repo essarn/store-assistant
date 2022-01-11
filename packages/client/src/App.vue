@@ -1,10 +1,16 @@
 <template>
   <div class="flex flex-col min-h-screen text-nord0">
-    <header class="bg-nord6 shadow p-4 relative">
+    <nav class="flex bg-nord6 shadow p-2 justify-between relative">
       <router-link to="/" class="rounded font-semibold p-2 hover:bg-nord4">
         Store Assistant
       </router-link>
-    </header>
+      <router-link
+        to="/settings"
+        class="rounded flex font-semibold p-2 items-center hover:bg-nord4"
+      >
+        Inställningar
+      </router-link>
+    </nav>
     <router-view v-slot="{ Component, route }" class="flex-1">
       <template v-if="Component">
         <keep-alive>

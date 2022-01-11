@@ -21,15 +21,15 @@
         <p>{{ campaign.price }} ({{ campaign.comparePrice }})</p>
         <p>{{ campaign.savePrice }}</p>
       </section>
-      <section class="card">
-        <div class="mb-2">
+      <section class="space-y-2 card">
+        <div>
           <p>{{ campaign.manufacturer }} {{ campaign.volume }}</p>
           <p v-if="campaign.description">{{ campaign.description }}</p>
         </div>
         <article
           v-for="product in products"
           :key="product.code"
-          class="flex space-x-2 py-2 items-center justify-between"
+          class="flex space-x-2 items-center justify-between"
         >
           <div class="w-4/5">
             <h2 class="truncate">{{ product.name }}</h2>
