@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col min-h-screen text-nord0">
-    <nav class="flex bg-nord6 shadow p-2 justify-between relative">
+    <nav class="flex bg-nord6 shadow-md p-2 justify-between relative">
       <router-link to="/" class="rounded font-semibold p-2 hover:bg-nord4">
         Store Assistant
       </router-link>

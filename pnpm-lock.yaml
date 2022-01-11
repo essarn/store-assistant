@@ -32,6 +32,7 @@ importers:
       '@graphql-codegen/typescript-operations': ^2.2.2
       '@graphql-typed-document-node/core': 3.1.0
       '@vitejs/plugin-vue': ^2.0.0
+      '@vueuse/core': ^7.5.3
       graphql: 15.8.0
       path: ^0.12.7
       pinia: ^2.0.9
@@ -46,6 +47,7 @@ importers:
       vue-tsc: ^0.29.8
       windicss: ^3.4.2
     dependencies:
+      '@vueuse/core': 7.5.3_vue@3.2.26
       graphql: 15.8.0
       pinia: 2.0.9_typescript@4.5.4+vue@3.2.26
       villus: 1.0.1_graphql@15.8.0+vue@3.2.26
@@ -1695,6 +1697,37 @@ packages:
 
   /@vue/shared/3.2.26:
     resolution: {integrity: sha512-vPV6Cq+NIWbH5pZu+V+2QHE9y1qfuTq49uNWw4f7FDEeZaDU2H2cx5jcUZOAKW7qTrUS4k6qZPbMy1x4N96nbA==}
+
+  /@vueuse/core/7.5.3_vue@3.2.26:
+    resolution: {integrity: sha512-D9j5ymHFMFRXQqCp0yZJkf/bvBGiz0MrKUa364p+L8dMyd5zyq2K1JmHyvoBd4xbTFRfmQ1h878u6YE5LCkDVQ==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.0
+      vue: ^2.6.0 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      '@vueuse/shared': 7.5.3_vue@3.2.26
+      vue: 3.2.26
+      vue-demi: 0.12.1_vue@3.2.26
+    dev: false
+
+  /@vueuse/shared/7.5.3_vue@3.2.26:
+    resolution: {integrity: sha512-BJ71cxHN5VByW1S58Gl85NFJaQu93F7Vs7K/MuAKsIIuHm9PBbkR5Vxkg9ko9cBdiKVt+FNoo13BhdbA+Vwycg==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.0
+      vue: ^2.6.0 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      vue: 3.2.26
+      vue-demi: 0.12.1_vue@3.2.26
+    dev: false
 
   /@windicss/config/1.6.2:
     resolution: {integrity: sha512-xULo0Lm1wF7c7HGyjVegalfOw/ZkBjrpWZ4CnCD5Nhdlu+3kcXCwjOSgVgnSXgh3pg7CnMSdZ/vtnIlgPBqvKA==}

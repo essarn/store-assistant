@@ -8,6 +8,7 @@
     "generate": "graphql-codegen"
   },
   "dependencies": {
+    "@vueuse/core": "^7.5.3",
     "graphql": "15.8.0",
     "pinia": "^2.0.9",
     "villus": "^1.0.1",

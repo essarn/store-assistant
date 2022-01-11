@@ -1,10 +1,7 @@
 import fetch from 'node-fetch'
-import { Campaign } from './graphql/campaigns'
-import { Category } from './graphql/categories'
-import { LeftMenuCategorytree, SearchCampaigns } from './types/remote'
 
 export const makeUrl = (path: string, parameters?: Record<string, string>) => {
-  const url = new URL(path, 'https://willys.se')
+  const url = new URL(path, 'https://www.willys.se')
   for (const key in parameters) {
     url.searchParams.append(key, parameters[key])
   }
@@ -24,49 +21,37 @@ export const parseDate = (date: string) => {
   return new Date(Date.UTC(year, month, day))
 }
 
-export const fetchCategories = async (): Promise<Category[]> => {
-  const url = makeUrl('leftMenu/categorytree')
-  const response = await fetch(url)
-  const json = await response.json()
-
-  const data = json as LeftMenuCategorytree
-  const categories = data.children.map((category) => ({
-    code: category.id,
-    name: category.title,
-  }))
-
-  return categories
+type MockSessionHeaders = {
+  cookie: string
+  'x-csrf-token': string
 }
 
-export const fetchCampaigns = async (
-  category?: string
-): Promise<Campaign[]> => {
-  const url = makeUrl('search/campaigns/offline', {
-    q: `2189${category != null ? ':categoryLevel1:' + category : ''}`,
-    size: '1000',
-  })
-  const response = await fetch(url)
-  const json = await response.json()
+export const mockSession = async (
+  store: string
+): Promise<MockSessionHeaders> => {
+  const response = await fetch(makeUrl('axfood/rest/csrf-token'))
+  const text = await response.text()
 
-  const data = json as SearchCampaigns
-  const campaigns = data.results?.map<Campaign>((campaign) => {
-    const promotion = campaign.potentialPromotions[0]
+  const cookie = response.headers.raw()['set-cookie'][0]
+  const session = cookie.split('=')[1]
+  const token = text.replaceAll('"', '')
 
-    return {
-      code: promotion.code,
-      type: campaign.title,
-      start: parseDate(promotion.startDate),
-      end: parseDate(promotion.endDate),
-      name: campaign.name,
-      image: campaign.image.url,
-      description: promotion.description,
-      manufacturer: campaign.manufacturer,
-      volume: campaign.displayVolume,
-      price: promotion.cartLabel,
-      comparePrice: promotion.comparePrice,
-      savePrice: promotion.savePrice,
-    }
+  const headers = { cookie: `JSESSIONID=${session}`, 'x-csrf-token': token }
+  await activateStore(headers, store)
+
+  return headers
+}
+
+const activateStore = async (headers: MockSessionHeaders, store: string) => {
+  const url = makeUrl('axfood/rest/store/activate')
+  const params = new URLSearchParams({
+    storeId: store,
+    activelySelected: 'true',
   })
 
-  return campaigns ?? []
+  await fetch(url, {
+    method: 'POST',
+    headers,
+    body: params,
+  })
 }

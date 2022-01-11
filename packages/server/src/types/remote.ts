@@ -123,7 +123,7 @@ export interface Result {
   ranking: number
   solrSearchScore: number
   name: string
-  manufacturer: string
+  manufacturer?: string
   displayVolume: string
   online: boolean
   googleAnalyticsCategory: string
@@ -224,7 +224,7 @@ export interface Item {
   name: string
   displayVolume: string
   thumbnail: Image
-  manufacturer: string
+  manufacturer?: string
   productBasketType: ProductBasketType
   incrementValue: number
   outOfStock: boolean
@@ -368,3 +368,121 @@ export interface Country {
   isocode: string
   name: string
 }
+
+// Search Products
+export interface SearchProducts {
+  results?: SearchProductsResult[]
+  sorts: Sort[]
+  pagination: Pagination
+  relatedResults?: unknown
+  relatedResultsPagination: Pagination
+  currentQuery?: unknown
+  breadcrumbs: unknown[]
+  facets: Facet[]
+  freeTextSearch: string
+  categoryCode?: unknown
+  keywordRedirectUrl?: unknown
+  spellingSuggestion?: unknown
+  categoryName?: unknown
+  customSuggestion?: unknown
+  categoryBreadcrumbs?: unknown
+}
+
+// interface Facet {
+//   code: string;
+//   name: string;
+//   priority: number;
+//   category: boolean;
+//   multiSelect: boolean;
+//   visible: boolean;
+//   topValues?: any;
+//   values: Value[];
+// }
+
+// interface Value {
+//   code: string;
+//   name: string;
+//   count: number;
+//   query: Query2;
+//   selected: boolean;
+// }
+
+// interface Query2 {
+//   url: string;
+//   query: Query;
+// }
+
+// interface Query {
+//   value: string;
+//   filterQueries?: any;
+//   searchQueryContext?: any;
+//   searchType?: any;
+// }
+
+// interface Pagination {
+//   pageSize: number;
+//   currentPage: number;
+//   sort?: any;
+//   numberOfPages: number;
+//   totalNumberOfResults: number;
+//   allProductsInCategoriesCount: number;
+//   allProductsInSearchCount: number;
+// }
+
+export interface Sort {
+  code: string
+  name: string
+  selected: boolean
+}
+
+export interface SearchProductsResult {
+  potentialPromotions: unknown[]
+  averageWeight?: unknown
+  price: string
+  priceValue: number
+  priceNoUnit: string
+  comparePrice: string
+  comparePriceUnit: string
+  depositPrice: string
+  labels: unknown[]
+  showGoodPriceIcon: boolean
+  image: Image
+  savingsAmount?: unknown
+  priceUnit: string
+  energyDeclaration?: unknown
+  productLine2: string
+  pickupProductLine2: string
+  isDrugProduct: boolean
+  nicotineMedicalProduct: boolean
+  nonEkoProduct: boolean
+  googleAnalyticsCategory: string
+  ranking?: unknown
+  solrSearchScore?: unknown
+  newsSplashProduct: boolean
+  gdprTrackingIncompliant: boolean
+  notAllowedAnonymous: boolean
+  notAllowedB2b: boolean
+  code: string
+  name: string
+  displayVolume: string
+  thumbnail: Image
+  manufacturer?: string
+  productBasketType: ProductBasketType
+  incrementValue: number
+  outOfStock: boolean
+  online: boolean
+}
+
+// interface ProductBasketType {
+//   code: string;
+//   type: string;
+// }
+
+// interface Image {
+//   imageType: string;
+//   format: string;
+//   url: string;
+//   altText?: any;
+//   galleryIndex?: any;
+//   width?: any;
+// }

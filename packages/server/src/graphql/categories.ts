@@ -1,4 +1,4 @@
-import { fetchCampaigns, fetchCategories } from '@/utils'
+import { fetchCampaigns, fetchCategories } from '@/controllers/remote'
 import {
   Field,
   FieldResolver,

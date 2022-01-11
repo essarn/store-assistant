@@ -1,4 +1,4 @@
-import { fetchCampaigns } from '@/utils'
+import { fetchCampaigns } from '@/controllers/remote'
 import { Field, ID, ObjectType, Query, Resolver } from 'type-graphql'
 
 @ObjectType()
@@ -25,7 +25,7 @@ export class Campaign {
   description?: string
 
   @Field()
-  manufacturer!: string
+  manufacturer?: string
 
   @Field()
   volume!: string
