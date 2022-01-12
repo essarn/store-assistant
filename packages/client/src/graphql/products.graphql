@@ -1,5 +1,5 @@
-query Products($storeId: String!, $search: String!) {
-  products(storeId: $storeId, search: $search) {
+query Products($search: String!) {
+  products(search: $search) {
     code
     name
     image

@@ -36,10 +36,7 @@
   import { useDebounce } from '@vueuse/core'
   import { ProductsDocument } from '@/graphql/generated'
   import { useQuery } from 'villus'
-  import { storeToRefs } from 'pinia'
-  import { useUserStore } from '@/stores/user'
 
-  const { store } = storeToRefs(useUserStore())
   const search = ref<string>()
   const debounced = useDebounce(search, 500)
 
@@ -52,7 +49,6 @@
     if (debounced.value) {
       void execute({
         variables: {
-          storeId: store?.value?.id ?? '2229',
           search: debounced.value,
         },
       })

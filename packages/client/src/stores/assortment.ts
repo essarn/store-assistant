@@ -6,9 +6,6 @@ import {
   Product,
 } from '@/graphql/generated'
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { createClient } from 'villus'
-
-const villus = createClient({ url: 'http://localhost:8080/graphql' })
 
 export type AssortmentState = {
   categories: Omit<Category, 'campaigns'>[]
@@ -31,7 +28,7 @@ export const useAssortmentStore = defineStore('campaigns', {
   actions: {
     async fetchCategoriesAndCampaigns() {
       if (this.categories.length === 0 && this.campaigns.length === 0) {
-        const { data } = await villus.executeQuery({
+        const { data } = await this.$villus.executeQuery({
           query: AssortmentDocument,
         })
 
@@ -55,7 +52,7 @@ export const useAssortmentStore = defineStore('campaigns', {
     },
     async fetchCampaignProducts(code: string) {
       if (!this.products.some((product) => product.campaign === code)) {
-        const { data } = await villus.executeQuery({
+        const { data } = await this.$villus.executeQuery({
           query: CampaignProductsDocument,
           variables: { code },
         })

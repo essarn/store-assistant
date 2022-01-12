@@ -7,6 +7,10 @@ import { CategoryResolver } from './graphql/categories'
 import { ProductResolver } from './graphql/products'
 import { StoreResolver } from './graphql/stores'
 
+export type RequestContext = {
+  store: string
+}
+
 export const bootstrap = async (app: FastifyInstance) => {
   await app.register(cors)
 
@@ -22,6 +26,11 @@ export const bootstrap = async (app: FastifyInstance) => {
   await app.register(mercurius, {
     schema,
     graphiql: true,
+    context({ headers }, _reply): RequestContext {
+      const store = headers.store as string | undefined
+
+      return { store: store ?? '2110' }
+    },
   })
 
   app.get('/ping', async (_request, _reply) => ({ message: 'pong' }))

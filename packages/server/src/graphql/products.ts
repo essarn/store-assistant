@@ -1,16 +1,8 @@
+import { RequestContext } from '@/app'
 import { CampaignProducts, SearchProducts } from '@/types/remote'
 import { makeUrl, mockSession } from '@/utils'
 import fetch from 'node-fetch'
-import {
-  Arg,
-  Args,
-  ArgsType,
-  Field,
-  ID,
-  ObjectType,
-  Query,
-  Resolver,
-} from 'type-graphql'
+import { Arg, Ctx, Field, ID, ObjectType, Query, Resolver } from 'type-graphql'
 
 @ObjectType()
 export class Product {
@@ -30,22 +22,15 @@ export class Product {
   volume?: string
 }
 
-@ArgsType()
-class ProductsArgs {
-  @Field()
-  storeId!: string
-
-  @Field()
-  search!: string
-}
-
 @Resolver(Product)
 export class ProductResolver {
   @Query(() => [Product])
   async products(
-    @Args() { storeId, search }: ProductsArgs
+    @Arg('search') search: string,
+    @Ctx() { store }: RequestContext
   ): Promise<Product[]> {
-    const headers = await mockSession(storeId)
+    const headers = await mockSession(store)
+
     const url = makeUrl('search', { q: search, size: '50' })
     const response = await fetch(url, {
       headers,
