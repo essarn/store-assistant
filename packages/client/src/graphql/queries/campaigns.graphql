@@ -1,0 +1,11 @@
+query Campaigns($category: String) {
+  campaigns(category: $category) {
+    code
+    type
+    name
+    description
+    image
+    manufacturer
+    volume
+  }
+}

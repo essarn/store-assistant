@@ -1,7 +1,7 @@
 import { Store } from '@/graphql/generated'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
-const storeKey = 'store_id'
+const storeKey = 'saved-store'
 
 export type UserState = {
   store?: Store

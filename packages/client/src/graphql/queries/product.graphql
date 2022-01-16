@@ -1,0 +1,21 @@
+query Product($code: String!) {
+  product(code: $code) {
+    code
+    ean
+    name
+    image
+    description
+    manufacturer
+    volume
+    labels
+    ingredients
+    price {
+      amount
+      unit
+    }
+    comparePrice {
+      amount
+      unit
+    }
+  }
+}

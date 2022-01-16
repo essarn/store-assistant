@@ -1,0 +1,27 @@
+query Campaign($code: String!) {
+  campaign(code: $code) {
+    code
+    type
+    name
+    description
+    manufacturer
+    volume
+    until
+    price {
+      amount
+      unit
+    }
+    comparePrice {
+      amount
+      unit
+    }
+    savePrice
+    products {
+      code
+      name
+      image
+      manufacturer
+      volume
+    }
+  }
+}

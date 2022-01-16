@@ -1,8 +1,8 @@
 <template>
   <main class="space-y-2 bg-nord6 p-2">
     <section class="space-y-4 card">
-      <p v-if="!savedStore" class="font-semibold">
-        Din butik måste väljas innan appen kan börja användas.
+      <p v-if="!savedStore">
+        Du måste välja din butik innan appen kan börja användas.
       </p>
       <div v-else>
         <p>Min valda butik är {{ savedStore.name }} ({{ savedStore.id }}).</p>

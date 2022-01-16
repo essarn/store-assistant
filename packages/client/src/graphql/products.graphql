@@ -1,9 +1,0 @@
-query Products($search: String!) {
-  products(search: $search) {
-    code
-    name
-    image
-    manufacturer
-    volume
-  }
-}

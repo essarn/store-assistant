@@ -2,10 +2,12 @@ import { FastifyInstance } from 'fastify'
 import cors from 'fastify-cors'
 import mercurius from 'mercurius'
 import { buildSchema } from 'type-graphql'
-import { CampaginResolver } from './graphql/campaigns'
-import { CategoryResolver } from './graphql/categories'
-import { ProductResolver } from './graphql/products'
-import { StoreResolver } from './graphql/stores'
+import { CampaignResolver } from './assortment/campaigns'
+import { CategoryResolver } from './assortment/categories'
+import { ProductResolver } from './assortment/products'
+import { StoreResolver } from './stores'
+
+export const { ErrorWithProps } = mercurius
 
 export type RequestContext = {
   store: string
@@ -16,10 +18,10 @@ export const bootstrap = async (app: FastifyInstance) => {
 
   const schema = await buildSchema({
     resolvers: [
+      StoreResolver,
       CategoryResolver,
       ProductResolver,
-      CampaginResolver,
-      StoreResolver,
+      CampaignResolver,
     ],
     dateScalarMode: 'timestamp',
   })

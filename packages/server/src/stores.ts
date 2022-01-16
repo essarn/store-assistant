@@ -1,10 +1,15 @@
-import { RestStores } from '@/types/remote'
 import { makeUrl } from '@/utils'
 import fetch from 'node-fetch'
 import { Field, ID, ObjectType, Query, Resolver } from 'type-graphql'
 
+type RestStore = {
+  storeId: string
+  name: string
+  onlineStore: boolean
+}
+
 @ObjectType()
-export class Store {
+class Store {
   @Field(() => ID)
   id!: string
 
@@ -19,18 +24,16 @@ export class Store {
 export class StoreResolver {
   @Query(() => [Store])
   async stores(): Promise<Store[]> {
-    const url = makeUrl('axfood/rest/store')
-    const response = await fetch(url)
+    const response = await fetch(makeUrl('axfood/rest/store'))
     const json = await response.json()
 
-    const data = json as [RestStores]
+    const data = json as [RestStore]
     data.shift() // Remove empty store
-    const stores = data.map((store) => ({
+
+    return data.map((store) => ({
       id: store.storeId,
       name: store.name,
       online: store.onlineStore,
     }))
-
-    return stores
   }
 }
