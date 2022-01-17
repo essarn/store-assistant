@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import cors from 'fastify-cors'
 import mercurius from 'mercurius'
+import 'reflect-metadata'
 import { buildSchema } from 'type-graphql'
 import { CampaignResolver } from './assortment/campaigns'
 import { CategoryResolver } from './assortment/categories'
