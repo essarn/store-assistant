@@ -7,6 +7,10 @@ import routes from '~pages'
 import App from './App.vue'
 import { useUserStore } from './stores/user'
 
+if (import.meta.env.PROD) {
+  import('./pwa')
+}
+
 const app = createApp(App)
 app.use(createRouter({ history: createWebHistory(), routes }))
 
@@ -15,7 +19,9 @@ pinia.use(() => ({ $villus: villus }))
 app.use(pinia)
 
 const villus = createClient({
-  url: 'http://localhost:8080/graphql',
+  url: import.meta.env.DEV
+    ? 'http://localhost:8080/graphql'
+    : 'https://fastify-app-2xy7vkisda-lz.a.run.app/graphql',
   use: [
     ({ opContext: { headers } }) => {
       const user = useUserStore()
