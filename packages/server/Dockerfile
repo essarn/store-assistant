@@ -17,7 +17,6 @@ RUN pnpm build -- --scope=server
 FROM node:lts-alpine
 RUN apk add dumb-init
 
-USER node
 ENV NODE_ENV production
 WORKDIR /usr/src/app
 
@@ -26,5 +25,6 @@ RUN npm install --only prod
 
 COPY --chown=node:node --from=build /opt/build/packages/server/dist ./
 
+USER node
 EXPOSE 8080
 CMD [ "dumb-init", "node", "--experimental-specifier-resolution", "node", "./index.js" ]
