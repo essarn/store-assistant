@@ -1,5 +1,5 @@
 <template>
-  <main class="space-y-2 bg-nord6 pb-2">
+  <main class="space-y-2 bg-nord6 pb-2 z-100">
     <header class="flex flex-col bg-nord6 shadow-md p-2 top-0 card sticky">
       <select v-model="filter" class="border-none rounded bg-nord4 p-2 px-2">
         <option disabled="true" :value="undefined" selected>Kategori</option>
@@ -13,15 +13,16 @@
         </option>
       </select>
     </header>
-    <section class="m-2 card">
+    <section class="space-y-2 m-2 card">
       <template v-if="!isFetching && campaigns">
         <template v-if="campaigns.length !== 0">
           <router-link
             v-for="campaign in campaigns"
             :key="campaign.code"
             :to="`/campaigns/${campaign.code}`"
+            class="block"
           >
-            <article class="flex space-y-2 items-center justify-between">
+            <article class="flex items-center justify-between">
               <div class="w-4/5">
                 <h2 class="truncate">{{ campaign.name }}</h2>
                 <p class="truncate">

@@ -6,6 +6,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     Breadcrumbs: typeof import('./src/components/Breadcrumbs.vue')['default']
     Button: typeof import('./src/components/Button.vue')['default']
+    LoadingSpinner: typeof import('./src/components/LoadingSpinner.vue')['default']
+    SearchResult: typeof import('./src/components/SearchResult.vue')['default']
   }
 }
 

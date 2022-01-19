@@ -3,12 +3,17 @@
     <template v-if="product">
       <header class="flex space-x-2 card items-center">
         <div class="flex-1">
-          <p>{{ product.name }}</p>
+          <Breadcrumbs
+            :items="[
+              { name: 'Produkter', path: '/products' },
+              { name: product.name },
+            ]"
+          />
           <p>{{ product.manufacturer }} {{ product.volume }}</p>
         </div>
         <img :src="product.image" class="w-1/5" />
       </header>
-      <div
+      <section
         v-if="product.description"
         class="card"
         @click="truncate.description = !truncate.description"
@@ -16,8 +21,8 @@
         <p :class="{ truncate: truncate.description }">
           {{ product.description }}
         </p>
-      </div>
-      <div
+      </section>
+      <section
         v-if="product.ingredients"
         class="card"
         @click="truncate.ingredients = !truncate.ingredients"
@@ -25,7 +30,7 @@
         <p :class="{ truncate: truncate.ingredients }">
           {{ product.ingredients }}
         </p>
-      </div>
+      </section>
       <section v-if="product.labels.length !== 0" class="p-2 card">
         <p
           v-for="label of product.labels"
