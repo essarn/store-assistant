@@ -1,8 +1,14 @@
 import { ErrorWithProps, RequestContext } from '@/app'
+import {
+  AxfoodRestPagination,
+  PaginatedResponse,
+  PaginationArgs,
+} from '@/pagination'
 import { makeUrl, mockSession } from '@/utils'
 import fetch from 'node-fetch'
 import {
   Arg,
+  Args,
   Ctx,
   Field,
   ID,
@@ -35,7 +41,7 @@ type AxfoodRestProduct = BaseAxfoodRestProduct & {
   comparePriceUnit: string
 }
 
-type RestSearchProducts = {
+type RestSearchProducts = AxfoodRestPagination & {
   results?: BaseAxfoodRestProduct[]
 }
 
@@ -90,6 +96,8 @@ class Product extends BaseProduct {
 @ObjectType({ implements: BaseProduct })
 export class PreviewProduct extends BaseProduct {}
 
+const ProductsResponse = PaginatedResponse(PreviewProduct)
+
 @Resolver()
 export class ProductResolver {
   @Query(() => Product)
@@ -131,13 +139,18 @@ export class ProductResolver {
     }
   }
 
-  @Query(() => [PreviewProduct])
+  @Query(() => ProductsResponse)
   async products(
     @Arg('query') query: string,
+    @Args() { size, page }: PaginationArgs,
     @Ctx() { store }: RequestContext
-  ): Promise<PreviewProduct[]> {
+  ): Promise<InstanceType<typeof ProductsResponse>> {
     const headers = await mockSession(store)
-    const url = makeUrl('search', { q: query, size: '100' })
+    const url = makeUrl('search', {
+      q: query,
+      size: size.toString(),
+      page: page.toString(),
+    })
 
     const response = await fetch(url, { headers })
     const json = await response.json()
@@ -154,6 +167,12 @@ export class ProductResolver {
         }
     )
 
-    return products ?? []
+    return {
+      items: products ?? [],
+      pagination: {
+        totalCount: data.pagination.totalNumberOfResults,
+        hasMore: page < data.pagination.numberOfPages - 1,
+      },
+    }
   }
 }

@@ -16,9 +16,7 @@
         <template v-if="Component">
           <keep-alive exclude="loading-spinner">
             <suspense timeout="0">
-              <template #default>
-                <component :is="Component" :key="route.path" />
-              </template>
+              <component :is="Component" :key="route.path" />
               <template #fallback>
                 <div class="flex bg-nord6 flex-1 items-center justify-center">
                   <LoadingSpinner />

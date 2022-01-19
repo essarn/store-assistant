@@ -1,6 +1,12 @@
+import {
+  AxfoodRestPagination,
+  PaginatedResponse,
+  PaginationArgs,
+} from '@/pagination'
 import fetch from 'node-fetch'
 import {
   Arg,
+  Args,
   Ctx,
   Field,
   ID,
@@ -37,7 +43,7 @@ type AxfoodRestStoreCampaign = AxfoodRestCampaign & {
   }
 }
 
-type SearchCampaignsOffline = {
+type SearchCampaignsOffline = AxfoodRestPagination & {
   results?: AxfoodRestCampaign[]
 }
 
@@ -89,6 +95,8 @@ class Campaign extends BaseCampaign {
 
 @ObjectType({ implements: BaseCampaign })
 class PreviewCampaign extends BaseCampaign {}
+
+const CampaignsResponse = PaginatedResponse(PreviewCampaign)
 
 @Resolver()
 export class CampaignResolver {
@@ -153,14 +161,16 @@ export class CampaignResolver {
     }
   }
 
-  @Query(() => [PreviewCampaign])
+  @Query(() => CampaignsResponse)
   async campaigns(
+    @Args() { size, page }: PaginationArgs,
     @Ctx() { store }: RequestContext,
     @Arg('category', { nullable: true }) category?: string
-  ): Promise<PreviewCampaign[]> {
+  ): Promise<InstanceType<typeof CampaignsResponse>> {
     const url = makeUrl(`search/campaigns/offline`, {
       q: `${store}${category ? `:categoryLevel1:${category}` : ''}`,
-      size: '999',
+      size: size.toString(),
+      page: page.toString(),
     })
     const response = await fetch(url)
     const json = await response.json()
@@ -171,7 +181,7 @@ export class CampaignResolver {
 
       return {
         code: promotion.code,
-        title: campaign.title,
+        type: campaign.title,
         name: promotion.name,
         description: promotion.description,
         image: campaign.image.url,
@@ -180,6 +190,12 @@ export class CampaignResolver {
       }
     })
 
-    return campaigns ?? []
+    return {
+      items: campaigns ?? [],
+      pagination: {
+        totalCount: data.pagination.totalNumberOfResults,
+        hasMore: page < data.pagination.numberOfPages - 1,
+      },
+    }
   }
 }

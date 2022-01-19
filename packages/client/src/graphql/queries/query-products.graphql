@@ -1,9 +1,0 @@
-query QueryProducts($query: String!) {
-  products(query: $query) {
-    code
-    name
-    image
-    manufacturer
-    volume
-  }
-}

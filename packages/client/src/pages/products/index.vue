@@ -2,7 +2,7 @@
   <main class="space-y-2 bg-nord6 pb-2 z-100">
     <header class="flex flex-col bg-nord6 shadow-md p-2 top-0 card sticky">
       <input
-        v-model="query"
+        v-model.trim="query"
         placeholder="Sökord eller SAP-id"
         class="border-none rounded bg-nord4 flex-1 p-2 px-2"
       />

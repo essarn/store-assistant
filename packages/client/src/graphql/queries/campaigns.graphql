@@ -1,11 +1,17 @@
-query Campaigns($category: String) {
-  campaigns(category: $category) {
-    code
-    type
-    name
-    description
-    image
-    manufacturer
-    volume
+query Campaigns($category: String, $size: Int!, $page: Int!) {
+  campaigns(category: $category, size: $size, page: $page) {
+    items {
+      code
+      type
+      name
+      description
+      image
+      manufacturer
+      volume
+    }
+    pagination {
+      totalCount
+      hasMore
+    }
   }
 }

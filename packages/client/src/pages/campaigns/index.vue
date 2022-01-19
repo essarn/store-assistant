@@ -13,52 +13,30 @@
         </option>
       </select>
     </header>
-    <section class="space-y-2 m-2 card">
-      <template v-if="!isFetching && campaigns">
-        <template v-if="campaigns.length !== 0">
-          <router-link
-            v-for="campaign in campaigns"
-            :key="campaign.code"
-            :to="`/campaigns/${campaign.code}`"
-            class="block"
-          >
-            <article class="flex items-center justify-between">
-              <div class="w-4/5">
-                <h2 class="truncate">{{ campaign.name }}</h2>
-                <p class="truncate">
-                  {{ campaign.manufacturer }} {{ campaign.volume }}
-                </p>
-              </div>
-              <img :src="campaign.image" class="w-1/5" />
-            </article>
-          </router-link>
-        </template>
-        <p v-else>Den här kategorin har inga erbjudanden.</p>
-      </template>
-      <p v-else>Laddar...</p>
+    <section class="flex m-2 justify-center card">
+      <transition name="fade" mode="out-in">
+        <suspense timeout="0">
+          <CampaignsList :key="filter" :category="filter" />
+          <template #fallback>
+            <div>
+              <LoadingSpinner />
+            </div>
+          </template>
+        </suspense>
+      </transition>
     </section>
   </main>
 </template>
 
 <script lang="ts" setup>
-  import { CampaignsDocument, CategoriesDocument } from '@/graphql/generated'
+  import { CategoriesDocument } from '@/graphql/generated'
   import { useQuery } from 'villus'
-  import { computed, ref, watchEffect } from 'vue'
+  import { computed, ref } from 'vue'
 
   const { data: categoriesData } = await useQuery({ query: CategoriesDocument })
-  const {
-    data: campaignsData,
-    isFetching,
-    execute,
-  } = await useQuery({
-    query: CampaignsDocument,
-  })
-
   const categories = computed(() =>
     categoriesData.value?.categories.filter((category) => !category.parent)
   )
-  const campaigns = computed(() => campaignsData.value?.campaigns)
 
-  const filter = ref<string | undefined>()
-  watchEffect(() => void execute({ variables: { category: filter.value } }))
+  const filter = ref<string>()
 </script>
