@@ -19,22 +19,38 @@
       </router-link>
     </transition-group>
     <LoadingSpinner v-if="isFetching" class="self-center" />
+    <div
+      ref="campaignsRef"
+      :class="{ 'h-[40px]': pagination?.hasMore && !isFetching }"
+    />
   </div>
   <p v-else>Den här kategorin har inga erbjudanden.</p>
 </template>
 
 <script lang="ts" setup>
   import { CampaignsDocument, PreviewCampaign } from '@/graphql/generated'
+  import { useElementVisibility } from '@vueuse/core'
   import { useQuery } from 'villus'
-  import { computed, reactive, ref, watchEffect } from 'vue'
+  import { computed, nextTick, reactive, ref, watchEffect } from 'vue'
 
-  const props = defineProps<{ category?: string; ready: boolean }>()
+  const campaignsRef = ref<HTMLElement>()
+  let visible = ref(false)
+
+  await nextTick(() => (visible = useElementVisibility(campaignsRef)))
+  watchEffect(() => {
+    if (visible.value) {
+      void nextTick(() => (visible.value = false))
+    }
+  })
+
+  const props = defineProps<{ category?: string }>()
   const variables = reactive({ ...props, size: 15, page: 0 })
 
   const { data, isFetching } = await useQuery({
     query: CampaignsDocument,
     variables,
   })
+  const pagination = computed(() => data.value?.campaigns.pagination)
 
   const campaigns = ref<PreviewCampaign[]>()
   watchEffect(() => {
@@ -44,11 +60,9 @@
     ]
   })
 
-  const fetchNext = computed(
-    () =>
-      data.value?.campaigns.pagination.hasMore &&
-      !isFetching.value &&
-      props.ready
-  )
-  watchEffect(() => fetchNext.value && variables.page++)
+  watchEffect(() => {
+    if (pagination.value?.hasMore && !isFetching.value && visible.value) {
+      variables.page++
+    }
+  })
 </script>

@@ -10,12 +10,7 @@
     <section class="flex flex-col m-2 items-center card">
       <transition name="fade" mode="out-in">
         <suspense timeout="0">
-          <SearchResult
-            v-if="debounced"
-            :key="debounced"
-            :query="debounced"
-            :ready="visible"
-          />
+          <SearchResult v-if="debounced" :key="debounced" :query="debounced" />
           <p v-else key="search">Ingen sökning har gjorts.</p>
           <template #fallback>
             <div>
@@ -30,17 +25,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { useDebounce, useElementVisibility } from '@vueuse/core'
-  import { nextTick, ref, watchEffect } from 'vue'
+  import { useDebounce } from '@vueuse/core'
+  import { ref } from 'vue'
 
   const query = ref<string | undefined>()
   const debounced = useDebounce(query, 500)
-
-  const target = ref<HTMLElement>()
-  const visible = useElementVisibility(target)
-  watchEffect(() => {
-    if (visible.value) {
-      void nextTick(() => (visible.value = false))
-    }
-  })
 </script>

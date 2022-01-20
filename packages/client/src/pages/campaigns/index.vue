@@ -16,7 +16,7 @@
     <section class="flex flex-col m-2 items-center card">
       <transition name="fade" mode="out-in">
         <suspense timeout="0">
-          <CampaignsList :key="filter" :category="filter" :ready="visible" />
+          <CampaignsList :key="filter" :category="filter" />
           <template #fallback>
             <div>
               <LoadingSpinner />
@@ -24,16 +24,14 @@
           </template>
         </suspense>
       </transition>
-      <div ref="test" />
     </section>
   </main>
 </template>
 
 <script lang="ts" setup>
   import { CategoriesDocument } from '@/graphql/generated'
-  import { useElementVisibility } from '@vueuse/core'
   import { useQuery } from 'villus'
-  import { computed, nextTick, ref, watchEffect } from 'vue'
+  import { computed, ref } from 'vue'
 
   const { data: categoriesData } = await useQuery({ query: CategoriesDocument })
   const categories = computed(() =>
@@ -41,12 +39,4 @@
   )
 
   const filter = ref<string>()
-
-  const test = ref<HTMLElement>()
-  const visible = useElementVisibility(test)
-  watchEffect(() => {
-    if (visible.value) {
-      void nextTick(() => (visible.value = false))
-    }
-  })
 </script>

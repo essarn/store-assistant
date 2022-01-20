@@ -19,22 +19,38 @@
       </router-link>
     </transition-group>
     <LoadingSpinner v-if="isFetching" class="self-center" />
+    <div
+      ref="searchRef"
+      :class="{ 'h-[40px]': pagination?.hasMore && !isFetching }"
+    />
   </div>
   <p v-else key="no-results">Inga produkter matchade sökningen.</p>
 </template>
 
 <script lang="ts" setup>
   import { PreviewProduct, ProductsDocument } from '@/graphql/generated'
+  import { useElementVisibility } from '@vueuse/core'
   import { useQuery } from 'villus'
-  import { computed, reactive, ref, watchEffect } from 'vue'
+  import { computed, nextTick, reactive, ref, watchEffect } from 'vue'
 
-  const props = defineProps<{ query: string; ready: boolean }>()
+  const searchRef = ref<HTMLElement>()
+  let visible = ref(false)
+
+  await nextTick(() => (visible = useElementVisibility(searchRef)))
+  watchEffect(() => {
+    if (visible.value) {
+      void nextTick(() => (visible.value = false))
+    }
+  })
+
+  const props = defineProps<{ query: string }>()
   const variables = reactive({ ...props, size: 15, page: 0 })
 
   const { data, isFetching } = await useQuery({
     query: ProductsDocument,
     variables,
   })
+  const pagination = computed(() => data.value?.products.pagination)
 
   const products = ref<PreviewProduct[]>()
   watchEffect(() => {
@@ -44,11 +60,13 @@
     ]
   })
 
-  const fetchNext = computed(
-    () =>
+  watchEffect(() => {
+    if (
       data.value?.products.pagination.hasMore &&
       !isFetching.value &&
-      props.ready
-  )
-  watchEffect(() => fetchNext.value && variables.page++)
+      visible.value
+    ) {
+      variables.page++
+    }
+  })
 </script>
