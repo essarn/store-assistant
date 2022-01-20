@@ -1,5 +1,8 @@
 <template>
-  <div v-if="campaigns?.length !== 0" class="flex flex-col space-y-2">
+  <div
+    v-if="campaigns?.length !== 0"
+    class="flex flex-col space-y-2 self-stretch"
+  >
     <transition-group name="fade">
       <router-link
         v-for="campaign in campaigns"
