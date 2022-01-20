@@ -25,11 +25,10 @@
 
 <script lang="ts" setup>
   import { PreviewProduct, ProductsDocument } from '@/graphql/generated'
-  import { useScroll } from '@vueuse/core'
   import { useQuery } from 'villus'
-  import { computed, reactive, ref, toRefs, watchEffect } from 'vue'
+  import { computed, reactive, ref, watchEffect } from 'vue'
 
-  const props = defineProps<{ query: string }>()
+  const props = defineProps<{ query: string; ready: boolean }>()
   const variables = reactive({ ...props, size: 15, page: 0 })
 
   const { data, isFetching } = await useQuery({
@@ -38,7 +37,6 @@
   })
 
   const products = ref<PreviewProduct[]>()
-  const pagination = computed(() => data.value?.products.pagination)
   watchEffect(() => {
     products.value = [
       ...(products.value ?? []),
@@ -46,14 +44,11 @@
     ]
   })
 
-  const scroll = toRefs(useScroll(window).arrivedState)
-  watchEffect(() => {
-    if (scroll.bottom.value) {
-      scroll.bottom.value = false
-
-      if (pagination.value?.hasMore && !isFetching.value) {
-        variables.page++
-      }
-    }
-  })
+  const fetchNext = computed(
+    () =>
+      data.value?.products.pagination.hasMore &&
+      !isFetching.value &&
+      props.ready
+  )
+  watchEffect(() => fetchNext.value && variables.page++)
 </script>
