@@ -21,8 +21,8 @@ export const bootstrap = async (app: FastifyInstance) => {
     resolvers: [
       StoreResolver,
       CategoryResolver,
-      ProductResolver,
       CampaignResolver,
+      ProductResolver,
     ],
     dateScalarMode: 'timestamp',
   })

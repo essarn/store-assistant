@@ -15,13 +15,13 @@ export const parseDate = (date: string) => {
   parts = [parts[1], ...parts[0].split('/').reverse()]
 
   const year = parseInt(parts[0])
-  const month = parseInt(parts[1]) - 1 // Varför? :(
+  const month = parseInt(parts[1]) - 1
   const day = parseInt(parts[2])
 
   return new Date(Date.UTC(year, month, day))
 }
 
-type MockSessionHeaders = {
+export type MockSessionHeaders = {
   cookie: string
   'x-csrf-token': string
 }

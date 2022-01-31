@@ -68,9 +68,4 @@
   })
 
   const campaign = computed(() => data.value?.campaign)
-
-  // const assortment = useAssortmentStore()
-  // const campaign = assortment.campaign(props.code)
-  // const products = computed(() => assortment.campaignProducts(props.code))
-  // await assortment.fetchCampaignProducts(props.code)
 </script>

@@ -1,8 +1,10 @@
+import { ErrorWithProps, RequestContext } from '@/app'
 import {
   AxfoodRestPagination,
   PaginatedResponse,
   PaginationArgs,
 } from '@/pagination'
+import { makeUrl, parseDate } from '@/utils'
 import fetch from 'node-fetch'
 import {
   Arg,
@@ -15,8 +17,6 @@ import {
   Query,
   Resolver,
 } from 'type-graphql'
-import { ErrorWithProps, RequestContext } from '../app'
-import { makeUrl, parseDate } from '../utils'
 import { BaseAxfoodRestProduct, PreviewProduct, Price } from './products'
 
 type AxfoodRestCampaign = {

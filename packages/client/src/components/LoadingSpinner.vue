@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
   .sk-chase {
     width: 40px;
     height: 40px;

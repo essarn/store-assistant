@@ -27,7 +27,7 @@ export class StoreResolver {
     const response = await fetch(makeUrl('axfood/rest/store'))
     const json = await response.json()
 
-    const data = json as [RestStore]
+    const data = json as RestStore[]
     data.shift() // Remove empty store
 
     return data.map((store) => ({
